@@ -1,0 +1,6 @@
+-c requirements.txt
+pip-tools
+isort
+black
+flake8
+mypy
