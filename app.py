@@ -9,6 +9,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pydeck as pdk
+import geopandas as gpd
 
 
 st.title("My first app")
@@ -18,12 +19,12 @@ st.write(
     pd.DataFrame({"first column": [1, 2, 3, 4], "second column": [10, 20, 30, 40]})
 )
 
-df = pd.DataFrame({"first column": [1, 2, 3, 4], "second column": [10, 20, 30, 40]})
+df_trial = pd.DataFrame({"first column": [1, 2, 3, 4], "second column": [10, 20, 30, 40]})
 
-df
+df_trial
 
 # another way to display df
-chart_data = df
+chart_data = df_trial
 
 st.line_chart(chart_data)
 
@@ -41,7 +42,7 @@ if st.checkbox("Show dataframe"):
     chart_data
 
 # selectbox
-option = st.selectbox("Which number do you like best?", df["first column"])
+option = st.selectbox("Which number do you like best?", df_trial["first column"])
 
 "You selected: ", option
 
@@ -90,3 +91,26 @@ geojson = pdk.Layer(
 
 r = pdk.Deck(layers=[polygon, geojson], initial_view_state=INITIAL_VIEW_STATE)
 st.pydeck_chart(r)
+
+
+
+########################################################################################################
+
+
+YEAR = 2017
+MONTH = 5
+VARIABLE_TO_PREDICT = "Airbnb_Number"
+
+url_geo = "https://raw.githubusercontent.com/egregorimar/urbana/master/data/interim/sections_geo.json"
+
+df_geo = gpd.read_file(url_geo)
+df_geo.set_index("Tag", inplace=True)
+
+url_data = "https://raw.githubusercontent.com/egregorimar/urbana/master/data/interim/sections_{}_{:02d}.csv".format(YEAR, MONTH)
+
+df = pd.read_csv(url_data)
+df.set_index("Tag", inplace=True)
+
+df_geo["Target"] = df[VARIABLE_TO_PREDICT]
+
+df_geo
