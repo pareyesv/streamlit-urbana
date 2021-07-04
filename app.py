@@ -6,87 +6,79 @@ Ref:
 """
 
 import streamlit as st
-import numpy as np
 import pandas as pd
 import pydeck as pdk
+from __version__ import version
+
+st.title("InsideAirBnB data for Barcelona")
 
 
-st.title("My first app")
+# data
+@st.cache(allow_output_mutation=True)
+def get_data():
+    """Load and merge data.
 
-st.write("Here's our first attempt at using data to create a table:")
-st.write(
-    pd.DataFrame({"first column": [1, 2, 3, 4], "second column": [10, 20, 30, 40]})
+    Returns:
+        dict: {"describe": pandas decribe() of the features,
+               "geojson": geojson formatted dictionary}
+    """
+
+    import geopandas as gpd
+    import json
+
+    YEAR = 2017
+    MONTH = 5
+    URL_GEO = "https://raw.githubusercontent.com/egregorimar/urbana/master/data/interim/sections_geo.json"
+    URL_DATA = "https://raw.githubusercontent.com/egregorimar/urbana/master/data/interim/sections_{}_{:02d}.csv".format(
+        YEAR, MONTH
+    )
+
+    df_geo = gpd.read_file(URL_GEO)
+    df_geo.set_index("Tag", inplace=True)
+
+    df = pd.read_csv(URL_DATA)
+    df.set_index("Tag", inplace=True)
+
+    full_df = df_geo.merge(df, on="Tag")
+
+    return {"describe": df.describe(), "geojson": json.loads(full_df.to_json())}
+
+
+bcn_data = get_data()
+bcngeojson = bcn_data["geojson"]
+features = bcn_data["describe"].columns.values
+
+# select features for elevation & color
+option_elevation = st.selectbox(
+    "Which feature do you like to visualize as elevation?", features
+)
+option_color = st.selectbox(
+    "Which feature do you like to visualize as color?", features
 )
 
-df = pd.DataFrame({"first column": [1, 2, 3, 4], "second column": [10, 20, 30, 40]})
-
-df
-
-# another way to display df
-chart_data = df
-
-st.line_chart(chart_data)
-
-# map
-map_data = pd.DataFrame(
-    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4], columns=["lat", "lon"]
+# plot
+BCN_INITIAL_VIEW_STATE = pdk.ViewState(
+    latitude=41.38879, longitude=2.15899, zoom=11, max_zoom=16, pitch=45, bearing=0
 )
 
-st.map(map_data)
-
-# checkbox
-if st.checkbox("Show dataframe"):
-    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-
-    chart_data
-
-# selectbox
-option = st.selectbox("Which number do you like best?", df["first column"])
-
-"You selected: ", option
-
-# button
-left_column, right_column = st.beta_columns(2)
-pressed = left_column.button("Press me?")
-if pressed:
-    right_column.write("Woohoo!")
-
-# expander
-expander = st.beta_expander("FAQ")
-expander.write("Here you could put in some really, really long explanations...")
-
-# map geojson layer
-# ref: https://deckgl.readthedocs.io/en/latest/gallery/geojson_layer.html
-DATA_URL = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/geojson/vancouver-blocks.json"
-LAND_COVER = [
-    [[-123.0, 49.196], [-123.0, 49.324], [-123.306, 49.324], [-123.306, 49.196]]
-]
-
-INITIAL_VIEW_STATE = pdk.ViewState(
-    latitude=49.254, longitude=-123.13, zoom=11, max_zoom=16, pitch=45, bearing=0
-)
-
-polygon = pdk.Layer(
-    "PolygonLayer",
-    LAND_COVER,
-    stroked=False,
-    # processes the data as a flat longitude-latitude pair
-    get_polygon="-",
-    get_fill_color=[0, 0, 0, 20],
-)
-
-geojson = pdk.Layer(
+bcngeojson = pdk.Layer(
     "GeoJsonLayer",
-    DATA_URL,
+    data=bcngeojson,
     opacity=0.8,
     stroked=False,
     filled=True,
     extruded=True,
     wireframe=True,
-    get_elevation="properties.valuePerSqm / 20",
-    get_fill_color="[255, 255, properties.growth * 255]",
+    get_elevation=f"properties.{option_elevation}",
+    elevation_scale=bcn_data["describe"].loc["max"].max()
+    / bcn_data["describe"][option_elevation]["max"],
+    get_fill_color=f"""[255, (1 - properties.{option_color} / {bcn_data["describe"][option_color]["max"]}) * 255, 255]""",
     get_line_color=[255, 255, 255],
 )
 
-r = pdk.Deck(layers=[polygon, geojson], initial_view_state=INITIAL_VIEW_STATE)
+r = pdk.Deck(layers=[bcngeojson], initial_view_state=BCN_INITIAL_VIEW_STATE)
 st.pydeck_chart(r)
+
+st.markdown(
+    f"Based on [streamlit-urbana](https://github.com/pareyesv/streamlit-urbana), v{version}"
+)
