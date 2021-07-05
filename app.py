@@ -79,6 +79,7 @@ bcngeojson = pdk.Layer(
 r = pdk.Deck(layers=[bcngeojson], initial_view_state=BCN_INITIAL_VIEW_STATE)
 st.pydeck_chart(r)
 
+# credits and version
 st.markdown(
     f"Based on [streamlit-urbana](https://github.com/pareyesv/streamlit-urbana), v{version}"
 )
