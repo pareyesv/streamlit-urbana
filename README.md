@@ -16,7 +16,7 @@ and follow the instructions.
 
 ## Init
 
-To start, please create a virtualenvironment. The `Makefile` assumes the name of the virtualenv is `streamlit-urbana`. Then, activate the environment.
+To start, please create a virtual environment. The `Makefile` assumes the name of the virtualenv is `streamlit-urbana`. Then, activate the environment.
 
 Then, run:
 
@@ -67,6 +67,16 @@ To run the app, do:
 make run-app
 ```
 
-## Commits convention
+## Commit conventions
 
-This project adheres to the [Conventional commits](https://www.conventionalcommits.org/) conventions.
+This project adheres to the [Conventional commits](https://www.conventionalcommits.org/) conventions. Consider using
+
+```console
+cz commit
+```
+
+to get help writting the message of the commit. For more info, see commitizen](https://commitizen-tools.github.io/commitizen/).
+
+## Bump version
+
+If you follow the [commit conventions](#commit-conventions), [commitizen](https://commitizen-tools.github.io/commitizen/) will automatically bump the version according to semantic versioning.

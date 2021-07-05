@@ -27,6 +27,10 @@ activate-venv:
 init: activate-venv
 	$(PYTHON_INTERPRETER) -m pip install pip-tools
 
+## run app
+run-app: activate-env
+	streamlit run app.py --server.port $(PORT)
+
 ## Delete all compiled Python files
 clean:
 	find . -name "*.py[co]" -exec rm {} \;
@@ -58,9 +62,9 @@ flake8:
 ## linter
 lint: flake8 isort black
 
-## run app
-run-app: activate-env
-	streamlit run app.py --server.port $(PORT)
+## bump version
+bump-version: activate-env
+	cz bump --changelog
 
 
 #################################################################################

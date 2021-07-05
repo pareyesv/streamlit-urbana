@@ -1,0 +1,9 @@
+[tool.commitizen]
+version = "0.1.0"
+tag_format = "v$version"
+version_files = [
+  ".cz.toml:version",
+  "__version__.py",
+]
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"

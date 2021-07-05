@@ -1,4 +1,5 @@
 -c requirements.txt
+Commitizen
 pip-tools
 isort
 black
