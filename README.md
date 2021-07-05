@@ -75,7 +75,7 @@ This project adheres to the [Conventional commits](https://www.conventionalcommi
 cz commit
 ```
 
-to get help writting the message of the commit. For more info, see commitizen](https://commitizen-tools.github.io/commitizen/).
+to get help writting the message of the commit. For more info, see [commitizen](https://commitizen-tools.github.io/commitizen/).
 
 ## Bump version
 
