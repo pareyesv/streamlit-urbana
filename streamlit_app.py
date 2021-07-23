@@ -64,7 +64,7 @@ BCN_INITIAL_VIEW_STATE = pdk.ViewState(
 bcngeojson = pdk.Layer(
     "GeoJsonLayer",
     data=bcngeojson,
-    opacity=0.8,
+    # opacity=0.8,
     stroked=False,
     filled=True,
     extruded=True,
