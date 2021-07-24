@@ -8,6 +8,8 @@ Ref:
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
+import geopandas as gpd
+import json
 from __version__ import version
 
 YEAR = 2017
@@ -21,7 +23,7 @@ INITIAL_LON = 2.15899
 CITY_NAME = "Barcelona"
 
 
-st.title(f"InsideAirBnB data for {CITY_NAME}")
+st.title(f"InsideAirBnB data in {CITY_NAME}")
 
 # data
 @st.cache(allow_output_mutation=True)
@@ -32,9 +34,6 @@ def get_data(url_geo: str, url_data: str) -> dict:
         dict: {"describe": pandas decribe() of the features,
                "geojson": geojson formatted dictionary}
     """
-
-    import geopandas as gpd
-    import json
 
     df_geo = gpd.read_file(url_geo)
     df_geo.set_index("Tag", inplace=True)
