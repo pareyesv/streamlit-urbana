@@ -47,7 +47,7 @@ def get_data(url_geo: str, url_data: str) -> dict:
 
 
 city_data = get_data(url_geo=URL_GEO, url_data=URL_DATA)
-city_geojson = city_data["geojson"]
+city_data["geojson"]
 features = city_data["describe"].columns.values
 
 # select features for elevation & color
@@ -68,9 +68,9 @@ INITIAL_VIEW_STATE = pdk.ViewState(
     bearing=0,
 )
 
-city_geojson = pdk.Layer(
+geojson_layer = pdk.Layer(
     "GeoJsonLayer",
-    data=city_geojson,
+    data=city_data["geojson"],
     # opacity=0.8,
     stroked=False,
     filled=True,
@@ -83,7 +83,7 @@ city_geojson = pdk.Layer(
     get_line_color=[255, 255, 255],
 )
 
-r = pdk.Deck(layers=[city_geojson], initial_view_state=INITIAL_VIEW_STATE)
+r = pdk.Deck(layers=[geojson_layer], initial_view_state=INITIAL_VIEW_STATE)
 st.pydeck_chart(r)
 
 # credits and version
