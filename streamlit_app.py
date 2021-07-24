@@ -83,8 +83,7 @@ geojson_layer = pdk.Layer(
     get_line_color=[255, 255, 255],
 )
 
-r = pdk.Deck(layers=[geojson_layer], initial_view_state=INITIAL_VIEW_STATE)
-st.pydeck_chart(r)
+st.pydeck_chart(pdk.Deck(layers=[geojson_layer], initial_view_state=INITIAL_VIEW_STATE))
 
 # credits and version
 st.markdown(
