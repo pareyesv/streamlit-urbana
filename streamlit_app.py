@@ -51,7 +51,7 @@ def get_data(url_geo: str, url_data: str) -> dict:
 
 
 city_data = get_data(url_geo=URL_GEO, url_data=URL_DATA)
-features = city_data["describe"].keys()
+features = city_data["describe"].keys().to_list()
 
 # select features for elevation & color
 option_elevation = st.selectbox(
