@@ -25,6 +25,7 @@ CITY_NAME = "Barcelona"
 
 st.title(f"InsideAirBnB data in {CITY_NAME}")
 
+
 # data
 @st.cache(allow_output_mutation=True)
 def get_data(url_geo: str, url_data: str) -> dict:
@@ -47,7 +48,6 @@ def get_data(url_geo: str, url_data: str) -> dict:
 
 
 city_data = get_data(url_geo=URL_GEO, url_data=URL_DATA)
-city_data["geojson"]
 features = city_data["describe"].columns.values
 
 # select features for elevation & color
