@@ -44,7 +44,10 @@ def get_data(url_geo: str, url_data: str) -> dict:
 
     full_df = df_geo.merge(df, on="Tag")
 
-    return {"describe": df.describe(), "geojson": json.loads(full_df.to_json())}
+    return {
+        "describe": df.describe().to_dict(),
+        "geojson": json.loads(full_df.to_json()),
+    }
 
 
 city_data = get_data(url_geo=URL_GEO, url_data=URL_DATA)
@@ -77,7 +80,7 @@ geojson_layer = pdk.Layer(
     extruded=True,
     wireframe=True,
     get_elevation=f"properties.{option_elevation}",
-    elevation_scale=city_data["describe"].loc["max"].max()
+    elevation_scale=max(v["max"] for v in city_data["describe"].values())
     / city_data["describe"][option_elevation]["max"],
     get_fill_color=f"""[255, (1 - properties.{option_color} / {city_data["describe"][option_color]["max"]}) * 255, 255]""",
     get_line_color=[255, 255, 255],
