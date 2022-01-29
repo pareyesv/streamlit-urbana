@@ -27,7 +27,7 @@ Then, run:
 make init
 ```
 
-Then, install the rest of the dependencies as suggested in [](#dependencies).
+Then, install the rest of the dependencies as suggested in [Dependencies](#dependencies).
 
 ## Dependencies
 
