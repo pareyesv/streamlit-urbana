@@ -4,28 +4,28 @@
 #
 #    pip-compile requirements-dev.in
 #
-appdirs==1.4.4
-    # via black
 argcomplete==1.12.3
     # via commitizen
-black==21.6b0
-    # via -r requirements-dev.in
-click==7.1.2
+black==22.1.0
+    # via
+    #   -c requirements.txt
+    #   -r requirements-dev.in
+click==8.0.3
     # via
     #   -c requirements.txt
     #   black
     #   pip-tools
 colorama==0.4.4
     # via commitizen
-commitizen==2.17.11
+commitizen==2.20.4
     # via -r requirements-dev.in
 decli==0.5.2
     # via commitizen
-flake8==3.9.2
+flake8==4.0.1
     # via -r requirements-dev.in
-isort==5.9.1
+isort==5.10.1
     # via -r requirements-dev.in
-jinja2==3.0.1
+jinja2==3.0.3
     # via
     #   -c requirements.txt
     #   commitizen
@@ -35,57 +35,66 @@ markupsafe==2.0.1
     #   jinja2
 mccabe==0.6.1
     # via flake8
-mypy==0.910
+mypy==0.931
     # via -r requirements-dev.in
 mypy-extensions==0.4.3
     # via
+    #   -c requirements.txt
     #   black
     #   mypy
-packaging==20.9
+packaging==21.3
     # via
     #   -c requirements.txt
     #   commitizen
-pathspec==0.8.1
-    # via black
-pep517==0.10.0
+pathspec==0.9.0
+    # via
+    #   -c requirements.txt
+    #   black
+pep517==0.12.0
     # via pip-tools
-pip-tools==6.2.0
+pip-tools==6.4.0
     # via -r requirements-dev.in
-prompt-toolkit==3.0.19
+platformdirs==2.4.1
+    # via
+    #   -c requirements.txt
+    #   black
+prompt-toolkit==3.0.26
     # via
     #   -c requirements.txt
     #   questionary
-pycodestyle==2.7.0
+pycodestyle==2.8.0
     # via flake8
-pyflakes==2.3.1
+pyflakes==2.4.0
     # via flake8
-pyparsing==2.4.7
+pyparsing==3.0.7
     # via
     #   -c requirements.txt
     #   packaging
-pyyaml==5.4.1
+pyyaml==6.0
     # via commitizen
-questionary==1.9.0
+questionary==1.10.0
     # via commitizen
-regex==2021.4.4
-    # via black
 termcolor==1.1.0
     # via commitizen
-toml==0.10.2
+tomli==2.0.0
     # via
     #   -c requirements.txt
     #   black
     #   mypy
     #   pep517
-tomlkit==0.7.2
+tomlkit==0.8.0
     # via commitizen
-typing-extensions==3.10.0.0
-    # via mypy
+typing-extensions==4.0.1
+    # via
+    #   -c requirements.txt
+    #   black
+    #   commitizen
+    #   mypy
 wcwidth==0.2.5
     # via
     #   -c requirements.txt
     #   prompt-toolkit
-wheel==0.36.2
+wheel==0.37.1
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
