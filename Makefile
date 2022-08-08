@@ -29,7 +29,7 @@ init: activate-venv
 
 ## run app
 run-app: activate-env
-	streamlit run app.py --server.port $(PORT)
+	streamlit run streamlit_app.py --server.port $(PORT)
 
 ## Delete all compiled Python files
 clean:
