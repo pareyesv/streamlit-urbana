@@ -25,6 +25,9 @@ INITIAL_LAT = 41.38879
 INITIAL_LON = 2.15899
 CITY_NAME = "Barcelona"
 
+DEFAULT_OPTION_ELEVATION = "Airbnb_Number"
+DEFAULT_OPTION_COLOR = "POI_Restaurants_Hotels"
+
 st.title(f"InsideAirBnB data in {CITY_NAME}")
 
 
@@ -53,10 +56,14 @@ features = city_data["describe"].columns.values
 
 # select features for elevation & color
 option_elevation = st.selectbox(
-    "Which feature do you like to visualize as elevation?", features
+    "Which feature do you like to visualize as elevation?",
+    features,
+    index=features.tolist().index(DEFAULT_OPTION_ELEVATION),
 )
 option_color = st.selectbox(
-    "Which feature do you like to visualize as color?", features
+    "Which feature do you like to visualize as color?",
+    features,
+    index=features.tolist().index(DEFAULT_OPTION_COLOR),
 )
 
 # plot
