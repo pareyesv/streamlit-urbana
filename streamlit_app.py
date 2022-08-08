@@ -5,11 +5,13 @@ Ref:
 - https://deckgl.readthedocs.io/en/latest/gallery/geojson_layer.html
 """
 
-import streamlit as st
+import json
+
+import geopandas as gpd
 import pandas as pd
 import pydeck as pdk
-import geopandas as gpd
-import json
+import streamlit as st
+
 from __version__ import version
 
 YEAR = 2017
